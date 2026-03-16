@@ -1,15 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  project: one
-  link_type: MyString
-  url: MyString
-  label: MyString
+  referenceable_type: Project
+  referenceable_id: 1
+  link_type: project
+  url: https://example.com/one
+  label: Example One
   position: 1
 
 two:
-  project: two
-  link_type: MyString
-  url: MyString
-  label: MyString
-  position: 1
+  referenceable_type: Project
+  referenceable_id: 2
+  link_type: project
+  url: https://example.com/two
+  label: Example Two
+  position: 2
