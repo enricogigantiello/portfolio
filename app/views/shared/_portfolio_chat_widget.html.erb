@@ -6,8 +6,8 @@
           style="width:3.5rem;height:3.5rem;z-index:1055;"
           data-bs-toggle="offcanvas"
           data-bs-target="#portfolioChatPanel"
-          aria-label="Ask AI about <%= @profile.full_name %>"
-          title="Ask AI about <%= @profile.full_name %>"
+          aria-label="Ask AI about <%= profile.full_name %>"
+          title="Ask AI about <%= profile.full_name %>"
           data-action="click->portfolio-chat#open">
     <i class="bi bi-chat-dots-fill fs-5"></i>
   </button>
@@ -21,7 +21,7 @@
 
     <div class="offcanvas-header border-bottom">
       <h5 class="offcanvas-title mb-0" id="portfolioChatLabel">
-        <i class="bi bi-robot me-2 text-primary"></i>Ask about <%= @profile.full_name %>
+        <i class="bi bi-robot me-2 text-primary"></i>Ask about <%= profile.full_name %>
       </h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>

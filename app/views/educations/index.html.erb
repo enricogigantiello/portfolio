@@ -65,11 +65,11 @@
                       </span>
                     </div>
                     <div class="progress" style="height: 8px;">
-                      <div class="progress-bar <%= education.grade_percentage >= 80 ? 'bg-success' : education.grade_percentage >= 60 ? 'bg-info' : 'bg-warning' %>" 
-                           role="progressbar" 
+                      <div class="progress-bar <%= education.grade_percentage >= 80 ? 'bg-success' : education.grade_percentage >= 60 ? 'bg-info' : 'bg-warning' %>"
+                           role="progressbar"
                            style="width: <%= education.grade_percentage %>%"
-                           aria-valuenow="<%= education.grade_percentage %>" 
-                           aria-valuemin="0" 
+                           aria-valuenow="<%= education.grade_percentage %>"
+                           aria-valuemin="0"
                            aria-valuemax="100">
                       </div>
                     </div>
@@ -101,7 +101,7 @@
           <div>
             <div class="d-flex justify-content-between mb-1">
               <span class="fw-semibold"><%= language.name %></span>
-              <span class="text-muted small"><%= language.level&.upcase %></span>
+              <span class="text-muted small"><%= language.level.upcase %></span>
             </div>
             <div class="progress" style="height: 6px;">
               <div class="progress-bar" role="progressbar" style="width: <%= language.level_percentage %>%"></div>

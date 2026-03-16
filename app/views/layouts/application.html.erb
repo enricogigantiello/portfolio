@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="name-initials"><%= link_to "EG", localized_root_path, class: "text-decoration-none text-white" %></div>
 
-        
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,6 +60,6 @@
       <%= yield %>
     </main>
 
-    <%= render "shared/portfolio_chat_widget" %>
+    <%= render "shared/portfolio_chat_widget", profile: @profile %>
   </body>
 </html>
