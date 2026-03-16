@@ -1,0 +1,56 @@
+de:
+  locales:
+    en: "EN"
+    it: "IT"
+    de: "DE"
+  navbar:
+    experience: "Berufserfahrung"
+    education: "Ausbildung"
+  educations:
+    index:
+      title: "Ausbildung"
+      subtitle: "Akademischer Hintergrund und Qualifikationen"
+      grade: "Note"
+      present: "Heute"
+      no_records: "Noch keine Bildungsdaten verfügbar."
+      breadcrumb:
+        home: "Home"
+        education: "Ausbildung"
+    show:
+      present: "Heute"
+      academic_performance: "Akademische Leistung"
+      out_of: "von"
+      minimum: "Minimum"
+      overall_achievement: "Gesamtergebnis"
+      performance:
+        excellent: "Ausgezeichnete akademische Leistung"
+        very_good: "Sehr gute akademische Leistung"
+        good: "Gute akademische Leistung"
+        satisfactory: "Zufriedenstellende akademische Leistung"
+      breadcrumb:
+        home: "Home"
+        education: "Ausbildung"
+  home:
+    sections:
+      summary: "Berufliches Profil"
+      achievements: "Wichtigste Erfolge"
+      tech_stack: "Tech Stack"
+      experience: "Berufserfahrung"
+      education: "Ausbildung"
+      languages: "Sprachen"
+    tech_stack:
+      description: "Sprachen und Tools, die ich täglich einsetze. Solide Grundlagen und KI-gestützte Entwicklung ermöglichen mir ein schnelles Einarbeiten in neue Stacks."
+      categories:
+        backend: "Backend"
+        frontend: "Frontend"
+        web3: "Web3"
+        databases: "Datenbanken"
+        devops: "DevOps"
+        payment: "Zahlungsanbieter"
+        ai: "KI"
+    experience:
+      present: "Heute"
+      selected_projects: "Ausgewählte Projekte:"
+    education:
+      grade: "Note"
+      tum_grade_hint: "1,0 = sehr gut, 4,0 = ausreichend"

@@ -1,0 +1,78 @@
+<%# ── system: collapsible, centered ──────────────────────────────── %>
+<% if message.role == "system" %>
+  <div id="message_<%= message.id %>" class="d-flex justify-content-center my-2">
+    <div class="text-center">
+      <a class="text-muted small text-decoration-none"
+         data-bs-toggle="collapse"
+         href="#system_msg_<%= message.id %>"
+         role="button">
+        <i class="bi-gear-fill me-1"></i>system
+      </a>
+      <div class="collapse" id="system_msg_<%= message.id %>">
+        <div class="card card-body text-muted mt-1 text-start"
+             style="font-size: 0.8em; background: #f8f9fa; max-width: 500px; white-space: pre-wrap;">
+          <%= render_message_content(message.content) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<%# ── tool result: monospace amber card, left-aligned ─────────────── %>
+<% elsif message.role == "tool" %>
+  <div id="message_<%= message.id %>" class="d-flex justify-content-start mb-3">
+    <div style="max-width: 80%;">
+      <div class="small text-muted mb-1">
+        <i class="bi-tools me-1"></i><strong>Tool result</strong>
+      </div>
+      <div class="rounded-3 px-3 py-2"
+           style="background: #fff8e1; border: 1px solid #ffe082; font-family: monospace; font-size: 0.82em; white-space: pre-wrap; color: #5d4037;">
+        <div id="message_<%= message.id %>_content"><%= render_message_content(message.content) %></div>
+      </div>
+      <div class="text-muted mt-1" style="font-size: 0.72em;"><%= message.created_at&.strftime("%I:%M %p") %></div>
+    </div>
+  </div>
+
+<%# ── user: right-aligned blue bubble ────────────────────────────── %>
+<% elsif message.role == "user" %>
+  <div id="message_<%= message.id %>" class="d-flex justify-content-end mb-3">
+    <div style="max-width: 75%;">
+      <div class="rounded-3 px-3 py-2 text-white"
+           style="background: #0084ff; white-space: pre-wrap; word-break: break-word;">
+        <div id="message_<%= message.id %>_content"><%= render_message_content(message.content) %></div>
+      </div>
+      <div class="text-end text-muted mt-1" style="font-size: 0.72em;"><%= message.created_at&.strftime("%I:%M %p") %></div>
+    </div>
+  </div>
+
+<%# ── assistant (+ optional tool calls): left-aligned gray bubble ── %>
+<% else %>
+  <div id="message_<%= message.id %>" class="d-flex justify-content-start mb-3">
+    <div style="max-width: 80%;">
+      <% if message.content.present? %>
+        <div class="rounded-3 px-3 py-2 text-primary bg-primary bg-opacity-10"
+             style="white-space: pre-wrap; word-break: break-word;">
+          <div id="message_<%= message.id %>_content"><%= render_message_content(message.content) %></div>
+          <% links = extract_portfolio_links(message.content.to_s) %>
+          <% if links.any? %>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <% links.each do |label, url| %>
+                <%= link_to url, class: "badge text-bg-light border text-decoration-none d-flex align-items-center gap-1", style: "font-size: 0.78em;", data: { turbo: false } do %>
+                  <i class="<%= portfolio_link_icon(url) %>"></i>
+                  <%= label %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div id="message_<%= message.id %>_content"></div>
+      <% end %>
+      <% if message.tool_call? %>
+        <div class="mt-2">
+          <%= render "messages/tool_calls", message: message %>
+        </div>
+      <% end %>
+      <div class="text-muted mt-1" style="font-size: 0.72em;"><%= message.created_at&.strftime("%I:%M %p") %></div>
+    </div>
+  </div>
+<% end %>

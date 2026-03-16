@@ -1,0 +1,45 @@
+<div data-controller="portfolio-chat"
+     data-portfolio-chat-url-value="<%= portfolio_chat_path(locale: I18n.locale) %>">
+
+  <%# Floating trigger button — bottom-right corner %>
+  <button class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg"
+          style="width:3.5rem;height:3.5rem;z-index:1055;"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#portfolioChatPanel"
+          aria-label="Ask AI about <%= @profile.full_name %>"
+          title="Ask AI about <%= @profile.full_name %>"
+          data-action="click->portfolio-chat#open">
+    <i class="bi bi-chat-dots-fill fs-5"></i>
+  </button>
+
+  <%# Offcanvas panel — slides from the right %>
+  <div class="offcanvas offcanvas-end"
+       tabindex="-1"
+       id="portfolioChatPanel"
+       aria-labelledby="portfolioChatLabel"
+       style="width: min(420px, 100vw);">
+
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title mb-0" id="portfolioChatLabel">
+        <i class="bi bi-robot me-2 text-primary"></i>Ask about <%= @profile.full_name %>
+      </h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body p-0 d-flex flex-column" style="min-height:0;">
+      <%# Turbo Frame — content lazy-loaded on first open %>
+      <%= turbo_frame_tag "portfolio-chat",
+            data: { "portfolio-chat-target": "frame" },
+            class: "d-flex flex-column flex-grow-1",
+            style: "min-height:0;" do %>
+        <%# Shown while the frame has not loaded yet %>
+        <div class="d-flex justify-content-center align-items-center flex-grow-1">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading…</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>

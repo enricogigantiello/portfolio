@@ -1,0 +1,152 @@
+<!-- Languages Header -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <nav aria-label="Navigation breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to "Home", localized_root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page">Languages</li>
+      </ol>
+    </nav>
+
+    <h1 class="display-5 fw-bold mb-2">
+      <i class="bi bi-translate me-3"></i>
+      Languages
+    </h1>
+    <p class="lead text-muted">
+      Language proficiency and skills
+    </p>
+  </div>
+</section>
+
+<!-- Languages List -->
+<section class="py-5">
+  <div class="container">
+    <% if @languages.any? %>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-5">
+              <% @languages.each_with_index do |language, index| %>
+                <div class="<%= 'mb-5' unless index == @languages.size - 1 %>">
+                  <!-- Language Header -->
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                      <h4 class="fw-bold mb-1">
+                        <i class="bi bi-chat-left-text me-2 text-primary"></i>
+                        <%= language.name %>
+                      </h4>
+                    </div>
+                    <span class="badge <%= language.level == 'native' ? 'bg-success' : language.level.start_with?('c') ? 'bg-primary' : language.level.start_with?('b') ? 'bg-info' : 'bg-warning' %> text-uppercase px-3 py-2">
+                      <%= language.level == 'native' ? 'Native' : language.level.upcase %>
+                    </span>
+                  </div>
+
+                  <!-- Proficiency Progress Bar -->
+                  <div class="mb-2">
+                    <div class="progress" style="height: 20px;">
+                      <div class="progress-bar <%= language.level == 'native' ? 'bg-success' : language.level.start_with?('c') ? 'bg-primary' : language.level.start_with?('b') ? 'bg-info' : 'bg-warning' %>" 
+                           role="progressbar" 
+                           style="width: <%= language.level_percentage %>%"
+                           aria-valuenow="<%= language.level_percentage %>" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                        <span class="fw-semibold"><%= language.level_percentage %>%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Proficiency Description -->
+                  <div class="text-muted small">
+                    <% if language.level == 'native' %>
+                      Native speaker with complete fluency
+                    <% elsif language.level == 'c2' %>
+                      Mastery - Near-native proficiency
+                    <% elsif language.level == 'c1' %>
+                      Advanced - Effective operational proficiency
+                    <% elsif language.level == 'b2' %>
+                      Upper Intermediate - Independent user
+                    <% elsif language.level == 'b1' %>
+                      Intermediate - Threshold level
+                    <% elsif language.level == 'a2' %>
+                      Elementary - Basic phrases and expressions
+                    <% elsif language.level == 'a1' %>
+                      Beginner - Basic understanding
+                    <% end %>
+                  </div>
+                </div>
+
+                <% unless index == @languages.size - 1 %>
+                  <hr class="my-4">
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- CEFR Reference Card -->
+          <div class="card border-0 bg-light mt-4">
+            <div class="card-body p-4">
+              <h6 class="fw-bold mb-3">
+                <i class="bi bi-info-circle me-2"></i>
+                About Language Proficiency Levels
+              </h6>
+              <p class="small text-muted mb-3">
+                Language proficiency is measured using the Common European Framework of Reference for Languages (CEFR):
+              </p>
+              <div class="row g-3 small">
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-success me-2 mt-1">Native</span>
+                    <span class="text-muted">Mother tongue</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-primary me-2 mt-1">C2</span>
+                    <span class="text-muted">Proficient user (Mastery)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-primary me-2 mt-1">C1</span>
+                    <span class="text-muted">Proficient user (Advanced)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-info me-2 mt-1">B2</span>
+                    <span class="text-muted">Independent user (Upper Intermediate)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-info me-2 mt-1">B1</span>
+                    <span class="text-muted">Independent user (Intermediate)</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex align-items-start">
+                    <span class="badge bg-warning me-2 mt-1">A2</span>
+                    <span class="text-muted">Basic user (Elementary)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        No language proficiency records available yet.
+      </div>
+    <% end %>
+
+    <!-- Back to Home Link -->
+    <div class="mt-5 text-center">
+      <%= link_to localized_root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-2"></i>
+        Back to Home
+      <% end %>
+    </div>
+  </div>
+</section>

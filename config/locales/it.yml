@@ -1,0 +1,56 @@
+it:
+  locales:
+    en: "EN"
+    it: "IT"
+    de: "DE"
+  navbar:
+    experience: "Esperienza"
+    education: "Istruzione"
+  educations:
+    index:
+      title: "Istruzione"
+      subtitle: "Formazione accademica e qualifiche"
+      grade: "Voto"
+      present: "Presente"
+      no_records: "Nessun titolo di studio disponibile."
+      breadcrumb:
+        home: "Home"
+        education: "Istruzione"
+    show:
+      present: "Presente"
+      academic_performance: "Rendimento Accademico"
+      out_of: "su"
+      minimum: "minimo"
+      overall_achievement: "Risultato Complessivo"
+      performance:
+        excellent: "Rendimento accademico eccellente"
+        very_good: "Rendimento accademico molto buono"
+        good: "Rendimento accademico buono"
+        satisfactory: "Rendimento accademico soddisfacente"
+      breadcrumb:
+        home: "Home"
+        education: "Istruzione"
+  home:
+    sections:
+      summary: "Profilo Professionale"
+      achievements: "Risultati Principali"
+      tech_stack: "Stack Tecnologico"
+      experience: "Esperienza"
+      education: "Istruzione"
+      languages: "Lingue"
+    tech_stack:
+      description: "Linguaggi e strumenti che utilizzo nel lavoro quotidiano. Solide basi e sviluppo assistito da AI mi permettono di scalare rapidamente su nuovi stack."
+      categories:
+        backend: "Backend"
+        frontend: "Frontend"
+        web3: "Web3"
+        databases: "Database"
+        devops: "DevOps"
+        payment: "Pagamenti"
+        ai: "AI"
+    experience:
+      present: "Presente"
+      selected_projects: "Progetti selezionati:"
+    education:
+      grade: "Voto"
+      tum_grade_hint: "1.0 = ottimo, 4.0 = sufficiente"

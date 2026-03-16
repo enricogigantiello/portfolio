@@ -1,0 +1,131 @@
+<!-- Project Hero Header -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <nav aria-label="Navigation breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to "Home", localized_root_path %></li>
+        <li class="breadcrumb-item"><%= link_to "Experience", jobs_path %></li>
+        <li class="breadcrumb-item"><%= link_to @project.job.company, job_path(@project.job) %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @project.title %></li>
+      </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+      <div>
+        <h1 class="display-5 fw-bold mb-2"><%= @project.title %></h1>
+        <h2 class="h5 text-muted mb-0">
+          <i class="bi bi-building me-2"></i>
+          <%= link_to @project.job.company, job_path(@project.job), class: "text-decoration-none" %>
+        </h2>
+      </div>
+      <% if @project.role.present? %>
+        <span class="badge bg-primary fs-6 px-3 py-2"><%= @project.role %></span>
+      <% end %>
+    </div>
+
+    <% if @project.description.present? %>
+      <div class="mt-4">
+        <p class="lead text-muted"><%= @project.description %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Main Content Column -->
+      <div class="col-lg-8">
+        <!-- Key Achievements -->
+        <% if @project.project_achievements.any? %>
+          <div class="mb-5">
+            <h3 class="section-title">
+              <i class="bi bi-trophy me-2"></i>
+              Key Achievements
+            </h3>
+            <hr class="section-divider">
+            <ul class="achievements-list">
+              <% @project.project_achievements.ordered.each do |achievement| %>
+                <li class="mb-2"><%= achievement.description %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Reference Links -->
+        <% if @project.reference_links.any? %>
+          <div class="mb-5">
+            <h3 class="section-title">
+              <i class="bi bi-link-45deg me-2"></i>
+              Reference Links
+            </h3>
+            <hr class="section-divider">
+            <% @project.reference_links.ordered.each do |link| %>
+              <%= render "reference_links/reference_link_card", reference_link: link %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar Column -->
+      <div class="col-lg-4">
+        <!-- Technologies Used -->
+        <% if @project.techs.any? %>
+          <div class="mb-5">
+            <h4 class="section-title">
+              <i class="bi bi-stack me-2"></i>
+              Technologies
+            </h4>
+            <hr class="section-divider">
+            <div class="d-flex flex-wrap gap-2">
+              <% @project.techs.each do |tech| %>
+                <span class="badge tech-badge"><%= tech.name %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Project Info Card -->
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Project Information</h5>
+            
+            <div class="mb-3">
+              <h6 class="text-muted small mb-1">Company</h6>
+              <p class="mb-0">
+                <%= link_to @project.job.company, job_path(@project.job), class: "text-decoration-none" %>
+              </p>
+            </div>
+
+            <% if @project.role.present? %>
+              <div class="mb-3">
+                <h6 class="text-muted small mb-1">Role</h6>
+                <p class="mb-0"><%= @project.role %></p>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+              <h6 class="text-muted small mb-1">Position</h6>
+              <p class="mb-0"><%= @project.job.title %></p>
+            </div>
+
+            <% if @project.project_achievements.any? %>
+              <div class="mb-3">
+                <h6 class="text-muted small mb-1">Achievements</h6>
+                <p class="mb-0"><%= @project.project_achievements.count %></p>
+              </div>
+            <% end %>
+
+            <% if @project.techs.any? %>
+              <div class="mb-0">
+                <h6 class="text-muted small mb-1">Technologies</h6>
+                <p class="mb-0"><%= @project.techs.count %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

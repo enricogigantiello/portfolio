@@ -1,0 +1,172 @@
+<!-- Education Hero Header -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <nav aria-label="Navigation breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('.breadcrumb.home'), localized_root_path %></li>
+        <li class="breadcrumb-item"><%= link_to t('.breadcrumb.education'), educations_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @education.degree %></li>
+      </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+      <div>
+        <h1 class="display-5 fw-bold mb-2"><%= @education.degree %></h1>
+        <h2 class="h5 text-muted mb-0">
+          <i class="bi bi-bank me-2"></i>
+          <%= @education.institution %>
+        </h2>
+      </div>
+      <span class="badge bg-primary fs-6 px-3 py-2">
+        <%= @education.start_date.strftime('%B %Y') %>
+        <% if @education.end_date %>
+          – <%= @education.end_date.strftime('%B %Y') %>
+        <% else %>
+          – <%= t('.present') %>
+        <% end %>
+      </span>
+    </div>
+
+    <% if @education.description.present? %>
+      <div class="mt-4">
+        <p class="lead text-muted"><%= @education.description %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<!-- Education Details -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Main Content Column -->
+      <div class="col-lg-8">
+        <!-- Academic Performance -->
+        <% if @education.grade.present? && @education.grade_max.present? %>
+          <div class="mb-5">
+            <h3 class="section-title">
+              <i class="bi bi-award me-2"></i>
+              <%= t('.academic_performance') %>
+            </h3>
+            <hr class="section-divider">
+            
+            <div class="card border-0 bg-light">
+              <div class="card-body p-4">
+                <div class="row align-items-center">
+                  <div class="col-md-4">
+                    <div class="text-center mb-3 mb-md-0">
+                      <div class="display-4 fw-bold text-primary"><%= @education.grade %></div>
+                      <div class="text-muted"><%= t('.out_of') %> <%= @education.grade_max %></div>
+                      <% if @education.grade_min.present? && @education.grade_min != 0 %>
+                        <div class="small text-muted">(<%= t('.minimum') %>: <%= @education.grade_min %>)</div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <h5 class="mb-3"><%= t('.overall_achievement') %></h5>
+                    <div class="progress" style="height: 24px;">
+                      <div class="progress-bar <%= @education.grade_percentage >= 80 ? 'bg-success' : @education.grade_percentage >= 60 ? 'bg-info' : 'bg-warning' %>" 
+                           role="progressbar" 
+                           style="width: <%= @education.grade_percentage %>%"
+                           aria-valuenow="<%= @education.grade_percentage %>" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                        <span class="fw-bold"><%= number_to_percentage(@education.grade_percentage, precision: 1) %></span>
+                      </div>
+                    </div>
+                    <p class="text-muted small mt-2 mb-0">
+                      <% if @education.grade_percentage >= 90 %>
+                        <%= t('.performance.excellent') %>
+                      <% elsif @education.grade_percentage >= 80 %>
+                        <%= t('.performance.very_good') %>
+                      <% elsif @education.grade_percentage >= 70 %>
+                        <%= t('.performance.good') %>
+                      <% else %>
+                        <%= t('.performance.satisfactory') %>
+                      <% end %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Additional Information -->
+        <% if @education.description.blank? %>
+          <div class="mb-5">
+            <h3 class="section-title">
+              <i class="bi bi-info-circle me-2"></i>
+              About This Program
+            </h3>
+            <hr class="section-divider">
+            <p class="text-muted">
+              This degree program was completed at <%= @education.institution %>
+              from <%= @education.start_date.strftime('%B %Y') %>
+              to <%= @education.end_date ? @education.end_date.strftime('%B %Y') : 'present' %>.
+            </p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar Column -->
+      <div class="col-lg-4">
+        <!-- Quick Facts Card -->
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title mb-3">
+              <i class="bi bi-mortarboard me-2"></i>
+              Quick Facts
+            </h5>
+            
+            <div class="mb-3">
+              <h6 class="text-muted small mb-1">Institution</h6>
+              <p class="mb-0"><%= @education.institution %></p>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="text-muted small mb-1">Degree</h6>
+              <p class="mb-0"><%= @education.degree %></p>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="text-muted small mb-1">Duration</h6>
+              <p class="mb-0">
+                <%= @education.start_date.strftime('%B %Y') %> – 
+                <%= @education.end_date ? @education.end_date.strftime('%B %Y') : 'Present' %>
+              </p>
+            </div>
+
+            <% if @education.grade.present? %>
+              <div class="mb-3">
+                <h6 class="text-muted small mb-1">Final Grade</h6>
+                <p class="mb-0">
+                  <%= @education.grade %> / <%= @education.grade_max %>
+                </p>
+              </div>
+
+              <div class="mb-0">
+                <h6 class="text-muted small mb-1">Grade Scale</h6>
+                <p class="mb-0">
+                  <%= @education.grade_min.present? && @education.grade_min != 0 ? @education.grade_min : '0' %> 
+                  to <%= @education.grade_max %>
+                </p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Grading System Note -->
+        <% if @education.grade_min > @education.grade_max %>
+          <div class="alert alert-info">
+            <small>
+              <i class="bi bi-info-circle me-1"></i>
+              <strong>German Grading System:</strong> 
+              In Germany, grades range from 1.0 (excellent) to 4.0 (pass), where lower is better.
+            </small>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

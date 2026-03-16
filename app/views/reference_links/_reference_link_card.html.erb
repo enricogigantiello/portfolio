@@ -1,0 +1,47 @@
+<div class="card border-0 shadow-sm mb-3">
+  <div class="row g-0">
+    
+    <% if reference_link.image.present? %>
+      <div class="col-md-4">
+        <%= image_tag reference_link.image,
+              class: "img-fluid rounded-start h-100 object-fit-cover",
+              alt: reference_link.title || reference_link.label,
+              style: "max-height: 200px; width: 100%; object-fit: cover;" %>
+      </div>
+    <% end %>
+
+    <div class="<%= reference_link.image.present? ? 'col-md-8' : 'col-12' %>">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2">
+          <% if reference_link.favicon.present? %>
+            <%= image_tag reference_link.favicon,
+                  class: "me-2 rounded",
+                  alt: "favicon",
+                  style: "width: 20px; height: 20px;",
+                  loading: "lazy" %>
+          <% end %>
+
+          <span class="badge <%= reference_link.link_type == 'news' ? 'bg-info text-dark' : 'bg-primary' %> me-2">
+            <i class="bi <%= reference_link.link_type == 'news' ? 'bi-newspaper' : 'bi-link-45deg' %> me-1"></i>
+            <%= reference_link.link_type.capitalize %>
+          </span>
+        </div>
+
+        <h5 class="card-title mb-1">
+          <%= link_to reference_link.url, target: "_blank", rel: "noopener noreferrer", class: "text-decoration-none stretched-link" do %>
+            <%= reference_link.title.presence || reference_link.label %>
+            <i class="bi bi-box-arrow-up-right ms-1 small"></i>
+          <% end %>
+        </h5>
+
+        <% if reference_link.label.present? && reference_link.title.present? && reference_link.label != reference_link.title %>
+          <p class="text-muted small mb-1"><%= reference_link.label %></p>
+        <% end %>
+
+        <% if reference_link.description.present? %>
+          <p class="card-text text-muted small mb-0"><%= truncate(reference_link.description, length: 160) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

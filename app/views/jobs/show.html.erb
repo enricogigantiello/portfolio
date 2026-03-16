@@ -1,0 +1,115 @@
+<!-- Job Hero Header -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <nav aria-label="breadcrumb"> <%# herb:disable html-aria-label-is-well-formatted %>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to "Home", localized_root_path %></li>
+        <li class="breadcrumb-item"><%= link_to "Experience", jobs_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @job.company %></li>
+      </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+      <div>
+        <h1 class="display-5 fw-bold mb-2"><%= @job.title %></h1>
+        <h2 class="h4 text-primary fw-semibold mb-0"><%= @job.company %></h2>
+      </div>
+      <span class="badge bg-secondary-subtle text-secondary fs-6 px-3 py-2">
+        <%= @job.start_date.strftime('%B %Y') %>
+        <% if @job.end_date %>
+          – <%= @job.end_date.strftime('%B %Y') %>
+        <% else %>
+          – Present
+        <% end %>
+      </span>
+    </div>
+
+    <% if @job.role.present? %>
+      <div class="mb-3">
+        <span class="badge bg-primary px-3 py-2"><%= @job.role %></span>
+      </div>
+    <% end %>
+
+    <% if @job.description.present? %>
+      <p class="lead text-muted mt-4"><%= @job.description %></p>
+    <% end %>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section class="py-5">
+  <div class="container">
+    <h3 class="section-title mb-4">Projects</h3>
+    <hr class="section-divider mb-5">
+
+    <% if @job.projects.any? %>
+      <div class="row g-4">
+        <% @job.projects.ordered.each do |project| %>
+          <div class="col-12">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4">
+                <!-- Project Header -->
+                <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+                  <div>
+                    <h4 class="fw-bold mb-1">
+                      <% favicon = project.reference_links.project.where.not(favicon: nil).first&.favicon %>
+                      <% if favicon.present? %>
+                        <%= image_tag favicon, class: "favicon me-1", alt: "#{project.title} favicon", style: "width: 20px; height: 20px;" %>
+                      <% end %>
+                      <%= link_to project.title, job_project_path(@job, project), class: "text-decoration-none" %>
+                    </h4>
+                  </div>
+                  <% if project.role.present? %>
+                    <span class="badge tech-badge-role"><%= project.role %></span>
+                  <% end %>
+                </div>
+
+                <!-- Project Description -->
+                <% if project.description.present? %>
+                  <p class="text-muted mb-3"><%= project.description %></p>
+                <% end %>
+
+                <div class="row">
+                  <div class="col-12">
+                    <!-- Technologies Used -->
+                    <% if project.techs.any? %>
+                      <div class="mb-3">
+                        <h6 class="text-uppercase fw-bold small text-muted mb-2">
+                          <i class="bi bi-stack me-1"></i> Technologies
+                        </h6>
+                        <div class="d-flex flex-wrap gap-2">
+                          <% project.techs.each do |tech| %>
+                            <span class="badge tech-badge"><%= tech.name %></span>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+
+                    <!-- Key Achievements -->
+                    <% if project.project_achievements.any? %>
+                      <div class="mb-3">
+                        <h6 class="text-uppercase fw-bold small text-muted mb-2">
+                          <i class="bi bi-trophy me-1"></i> Key Achievements
+                        </h6>
+                        <ul class="text-muted small mb-0">
+                          <% project.project_achievements.ordered.each do |achievement| %>
+                            <li><%= achievement.description %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        No projects available for this position yet.
+      </div>
+    <% end %>
+  </div>
+</section>

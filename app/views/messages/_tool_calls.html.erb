@@ -1,0 +1,11 @@
+<div class="d-flex flex-column gap-2">
+  <% message.tool_calls.each do |tool_call| %>
+    <div class="rounded-3 px-3 py-2 d-flex align-items-start gap-2"
+         style="background: #e8f5e9; border: 1px solid #a5d6a7; font-family: monospace; font-size: 0.82em; color: #1b5e20;">
+      <i class="bi-lightning-fill mt-1" style="color: #388e3c; flex-shrink: 0;"></i>
+      <div>
+        <span style="font-weight: 600;"><%= tool_call.name %></span>(<%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect}" }.join(", ") %>)
+      </div>
+    </div>
+  <% end %>
+</div>

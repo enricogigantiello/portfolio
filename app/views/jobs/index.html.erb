@@ -1,0 +1,10 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <h1 class="mb-4">Experience</h1>
+    <hr class="mb-5">
+
+    <% @jobs.each do |job| %>
+      <%= render 'shared/job_item', job: job, show_link: true %>
+    <% end %>
+  </div>
+</section>

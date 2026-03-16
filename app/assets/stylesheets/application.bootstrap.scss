@@ -1,0 +1,210 @@
+// Override Bootstrap variables before import
+$primary: #34495e;
+$secondary: #2c3e50;
+$body-color: #34495e;
+$link-color: #34495e;
+$link-hover-color: #2c3e50;
+
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+// CV Header
+.cv-header {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+// Profile photo
+.profile-photo-placeholder {
+  width: 120px;
+  height: 120px;
+  background-color: #ecf0f1;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.name-initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #34495e;
+  font-weight: 700;
+}
+
+// Contact bar
+.contact-bar {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+// Section titles
+.section-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2c3e50;
+}
+
+.section-divider {
+  width: 50px;
+  border-top: 3px solid #34495e;
+  opacity: 1;
+  margin-bottom: 1.25rem;
+}
+
+// Tech badges
+.tech-badge {
+  background-color: #eaf2f8;
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.35em 0.75em;
+}
+
+// Achievements list
+.achievements-list {
+  padding-left: 1.25rem;
+  color: #6c757d;
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Experience items
+.experience-item {
+  border-left: 3px solid #34495e;
+  padding-left: 1rem;
+}
+
+// Project cards within experience
+.project-card {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+// Role badge inside project cards
+.tech-badge-role {
+  background-color: #d5e8f5;
+  color: #1a5276;
+  font-weight: 500;
+  font-size: 0.78rem;
+  padding: 0.25em 0.65em;
+  white-space: nowrap;
+}
+
+// Locale switcher
+.locale-switcher {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1050;
+  display: flex;
+  gap: 0.25rem;
+
+  .locale-link {
+    display: inline-block;
+    padding: 0.2em 0.55em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    &.active {
+      background-color: #34495e;
+      border-color: #34495e;
+      color: #fff;
+    }
+  }
+}
+
+// Navbar styling
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .navbar-brand {
+    font-weight: 700;
+    color: #2c3e50 !important;
+    font-size: 1.25rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #34495e !important;
+    }
+  }
+
+  .nav-link {
+    color: #495057 !important;
+    font-weight: 500;
+    text-decoration: none !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin: 0 0.25rem;
+
+    &:hover {
+      color: #2c3e50 !important;
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    &.active {
+      color: #34495e !important;
+      background-color: rgba(52, 152, 219, 0.15);
+      font-weight: 600;
+    }
+  }
+
+  .btn-group {
+    .btn {
+      border-color: #dee2e6;
+      color: #495057;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.375rem 0.75rem;
+      transition: all 0.2s ease;
+      text-decoration: none !important;
+
+      &:hover {
+        background-color: #f8f9fa;
+        border-color: #adb5bd;
+        color: #2c3e50;
+      }
+
+      &.active {
+        background-color: #34495e;
+        border-color: #34495e;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      &:not(:last-child) {
+        border-right: none;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,114 @@
+<!-- Education Header -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <nav aria-label="Navigation breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('.breadcrumb.home'), localized_root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= t('.breadcrumb.education') %></li>
+      </ol>
+    </nav>
+
+    <h1 class="display-5 fw-bold mb-2"><%= t('.title') %></h1>
+    <p class="lead text-muted">
+      <%= t('.subtitle') %>
+    </p>
+  </div>
+</section>
+
+<!-- Education List -->
+<section class="py-5">
+  <div class="container">
+    <% if @educations.any? %>
+      <div class="row g-4">
+        <% @educations.each do |education| %>
+          <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body p-4">
+                <!-- Education Header -->
+                <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
+                  <div class="flex-grow-1">
+                    <h4 class="fw-bold mb-1">
+                      <%= link_to education.degree, education_path(education), class: "text-decoration-none" %>
+                    </h4>
+                    <p class="text-muted mb-0">
+                      <i class="bi bi-bank me-1"></i>
+                      <%= education.institution %>
+                    </p>
+                  </div>
+                  <span class="badge bg-secondary-subtle text-secondary">
+                    <%= education.start_date.strftime('%Y') %>
+                    <% if education.end_date %>
+                      – <%= education.end_date.strftime('%Y') %>
+                    <% else %>
+                      – <%= t('.present') %>
+                    <% end %>
+                  </span>
+                </div>
+
+                <!-- Description -->
+                <% if education.description.present? %>
+                  <p class="text-muted small mb-3"><%= truncate(education.description, length: 120) %></p>
+                <% end %>
+
+                <!-- Grade Display -->
+                <% if education.grade.present? && education.grade_max.present? %>
+                  <div class="mb-0">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h6 class="text-uppercase fw-bold small text-muted mb-0">
+                        <i class="bi bi-award me-1"></i> <%= t('.grade') %>
+                      </h6>
+                      <span class="text-muted small">
+                        <%= education.grade %> / <%= education.grade_max %>
+                        <% if education.grade_min.present? && education.grade_min != 0 %>
+                          (min: <%= education.grade_min %>)
+                        <% end %>
+                      </span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                      <div class="progress-bar <%= education.grade_percentage >= 80 ? 'bg-success' : education.grade_percentage >= 60 ? 'bg-info' : 'bg-warning' %>" 
+                           role="progressbar" 
+                           style="width: <%= education.grade_percentage %>%"
+                           aria-valuenow="<%= education.grade_percentage %>" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        <%= t('.no_records') %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+
+<div class="container">
+  <div class="card border-0 shadow-sm h-100">
+    <div class="card-body p-4">
+      <h3 class="section-title"><%= t("home.sections.languages") %></h3>
+      <hr class="section-divider">
+
+      <div class="d-flex flex-column gap-3">
+        <% Language.all.each do |language| %>
+          <div>
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-semibold"><%= language.name %></span>
+              <span class="text-muted small"><%= language.level.upcase %></span>
+            </div>
+            <div class="progress" style="height: 6px;">
+              <div class="progress-bar" role="progressbar" style="width: <%= language.level_percentage %>%"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

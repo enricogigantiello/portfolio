@@ -1,0 +1,56 @@
+en:
+  locales:
+    en: "EN"
+    it: "IT"
+    de: "DE"
+  navbar:
+    experience: "Experience"
+    education: "Education"
+  educations:
+    index:
+      title: "Education"
+      subtitle: "Academic background and qualifications"
+      grade: "Grade"
+      present: "Present"
+      no_records: "No education records available yet."
+      breadcrumb:
+        home: "Home"
+        education: "Education"
+    show:
+      present: "Present"
+      academic_performance: "Academic Performance"
+      out_of: "out of"
+      minimum: "minimum"
+      overall_achievement: "Overall Achievement"
+      performance:
+        excellent: "Excellent academic performance"
+        very_good: "Very good academic performance"
+        good: "Good academic performance"
+        satisfactory: "Satisfactory academic performance"
+      breadcrumb:
+        home: "Home"
+        education: "Education"
+  home:
+    sections:
+      summary: "Professional Summary"
+      achievements: "Key Achievements"
+      tech_stack: "Tech Stack"
+      experience: "Experience"
+      education: "Education"
+      languages: "Languages"
+    tech_stack:
+      description: "Languages and tools I use in my daily work. Strong fundamentals and AI-assisted development let me ramp up quickly on new stacks."
+      categories:
+        backend: "Backend"
+        frontend: "Frontend"
+        web3: "Web3"
+        databases: "Databases"
+        devops: "DevOps"
+        payment: "Payment Providers"
+        ai: "AI"
+    experience:
+      present: "Present"
+      selected_projects: "Selected projects:"
+    education:
+      grade: "Grade"
+      tum_grade_hint: "1.0 = best, 4.0 = worst"

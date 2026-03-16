@@ -1,0 +1,15 @@
+<% content_for :title, "Ask about #{Profile.instance.full_name}" %>
+
+<%= turbo_frame_tag "portfolio-chat", class: "d-flex flex-column", style: "height: 75vh;" do %>
+  <%= turbo_stream_from "chat_#{@chat.id}" %>
+
+  <div id="messages" class="flex-grow-1 overflow-auto p-3">
+    <% @chat.messages.where(role: %w[user assistant]).order(:id).each do |message| %>
+      <%= render message %>
+    <% end %>
+  </div>
+
+  <div class="p-2 border-top">
+    <%= render "messages/form", chat: @chat, message: @message %>
+  </div>
+<% end %>
