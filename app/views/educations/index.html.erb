@@ -101,7 +101,7 @@
           <div>
             <div class="d-flex justify-content-between mb-1">
               <span class="fw-semibold"><%= language.name %></span>
-              <span class="text-muted small"><%= language.level.upcase %></span>
+              <span class="text-muted small"><%= language.level&.upcase || "N/A" %></span>
             </div>
             <div class="progress" style="height: 6px;">
               <div class="progress-bar" role="progressbar" style="width: <%= language.level_percentage %>%"></div>
