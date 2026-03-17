@@ -22,6 +22,7 @@ servers:
 #
 proxy:
   host: enricogiga.dev,www.enricogiga.dev
+  ssl: true
 
 # Where you keep your container images.
 registry:
