@@ -21,7 +21,7 @@ servers:
 # Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
 #
 proxy:
-  host: portfolio.178.104.36.178.sslip.io
+  host: enricogiga.dev,www.enricogiga.dev
 
 # Where you keep your container images.
 registry:
