@@ -32,8 +32,7 @@ Rails.application.routes.draw do
       get "chat", to: "portfolio_chats#show", as: :portfolio_chat
     end
 
-    # Routes requiring owner role
-    authenticate :user, ->(u) { u.role_owner? } do
+      # Routes requiring owner role
       resources :chats do
         resources :messages, only: [ :create ]
       end
@@ -42,6 +41,5 @@ Rails.application.routes.draw do
           post :refresh
         end
       end
-    end
   end
 end

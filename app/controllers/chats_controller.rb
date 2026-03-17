@@ -28,7 +28,7 @@ class ChatsController < ApplicationController
   private
 
   def require_owner!
-    redirect_to root_path, alert: "Not authorized." unless current_user.role_owner?
+    redirect_to localized_root_path, alert: "Not authorized." unless current_user.role_owner?
   end
 
   def set_chat
