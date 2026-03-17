@@ -8,7 +8,6 @@ module FetchableUrlMetadata
   end
 
   def fetch_url_metadata
-    debugger
     begin
       page = LinkThumbnailer.generate(url)
       self.update_column(:thumbnail_data, {

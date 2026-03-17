@@ -81,7 +81,6 @@ class PortfolioChatResponseJob < ApplicationJob
   end
 
   def relevant_to_portfolio?(content)
-    debugger
     response = RubyLLM.chat(model: "gpt-4.1-nano")
       .with_instructions(<<~PROMPT)
         You are a strict classifier. Decide if the user message is related to a professional
