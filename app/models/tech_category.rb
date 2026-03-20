@@ -8,6 +8,7 @@ class TechCategory < ApplicationRecord
     database: "database",
     payment: "payment",
     ai: "ai",
-    cloud_platform: "cloud_platform"
+    cloud_platform: "cloud_platform",
+    web3: "web3"
   }
 end
