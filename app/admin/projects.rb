@@ -5,6 +5,7 @@ ActiveAdmin.register Project do
                 :title_en, :title_it, :title_de,
                 :description_en, :description_it, :description_de,
                 :role_en, :role_it, :role_de,
+                :tile_image, :cover_image,
                 tech_ids: [],
                 project_achievements_attributes: [ :id, :description_en, :description_it, :description_de, :position, :_destroy ],
                 reference_links_attributes: [ :id, :label_en, :label_it, :label_de, :url, :link_type, :position, :_destroy ]
@@ -39,6 +40,20 @@ ActiveAdmin.register Project do
       row :description
       row :role
       row :position
+      row :tile_image do |project|
+        if project.tile_image.attached?
+          image_tag url_for(project.tile_image), style: "max-width: 200px; height: auto;"
+        else
+          status_tag "No image", class: "warning"
+        end
+      end
+      row :cover_image do |project|
+        if project.cover_image.attached?
+          image_tag url_for(project.cover_image), style: "max-width: 200px; height: auto;"
+        else
+          status_tag "No image", class: "warning"
+        end
+      end
       row :created_at
       row :updated_at
     end
@@ -101,6 +116,8 @@ ActiveAdmin.register Project do
     f.inputs "Project Details" do
       f.input :job, as: :select, collection: Job.order(:company).map { |j| [ "#{j.company} - #{j.title}", j.id ] }
       f.input :position
+      f.input :tile_image, as: :file, hint: (f.object.tile_image.attached? ? image_tag(url_for(f.object.tile_image), style: "max-width: 200px; height: auto;") : content_tag(:span, "No image uploaded"))
+      f.input :cover_image, as: :file, hint: (f.object.cover_image.attached? ? image_tag(url_for(f.object.cover_image), style: "max-width: 200px; height: auto;") : content_tag(:span, "No image uploaded"))
     end
 
     I18n.available_locales.each do |locale|

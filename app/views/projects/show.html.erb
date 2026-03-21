@@ -1,3 +1,10 @@
+<!-- Cover Image Banner -->
+<% if @project.cover_image.attached? %>
+  <div class="ratio ratio-16x9 overflow-hidden" style="max-height: 480px;">
+    <%= image_tag @project.cover_image, class: "w-100 h-100 object-fit-cover", alt: @project.title %>
+  </div>
+<% end %>
+
 <!-- Project Hero Header -->
 <section class="py-5 bg-light">
   <div class="container">
@@ -90,7 +97,6 @@
         <div class="card border-0 shadow-sm">
           <div class="card-body">
             <h5 class="card-title mb-3">Project Information</h5>
-            
             <div class="mb-3">
               <h6 class="text-muted small mb-1">Company</h6>
               <p class="mb-0">

@@ -9,6 +9,9 @@ class Project < ApplicationRecord
   has_many :reference_links, as: :referenceable, dependent: :destroy
   has_many :project_achievements, dependent: :destroy
 
+  has_one_attached :tile_image
+  has_one_attached :cover_image
+
   accepts_nested_attributes_for :project_achievements, :reference_links, allow_destroy: true
 
   scope :ordered, -> { order(:position) }
