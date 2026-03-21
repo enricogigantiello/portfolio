@@ -2,7 +2,6 @@
   <div class="d-flex justify-content-between align-items-start flex-wrap mb-1">
     <div>
       <h5 class="fw-bold mb-0">
-        
         <% if local_assigns.fetch(:show_link, true) %>
           <%= link_to job.title, job_path(job), class: 'text-decoration-none' %>
         <% else %>
@@ -33,7 +32,6 @@
 
   <% if job.projects.any? %>
     <p class="text-muted small mt-2 mb-3"><%= t("home.experience.selected_projects") %></p>
-    
     <div class="ps-2 d-flex flex-column gap-3">
       <% job.projects.ordered.each do |project| %>
         <%= render 'shared/project_item', project: project, job: job, show_link: local_assigns.fetch(:show_link, true) %>
