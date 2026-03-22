@@ -18,6 +18,8 @@ class PortfolioChatResponseJob < ApplicationJob
       return
     end
 
+    purge_incomplete_tool_calls!(chat)
+
     chat
       .with_tool(PortfolioSearchTool)
       .with_tool(JobPostingFetcherTool)
@@ -34,6 +36,22 @@ class PortfolioChatResponseJob < ApplicationJob
   end
 
   private
+
+  def purge_incomplete_tool_calls!(chat)
+    responded_tool_call_ids = Message
+      .where(chat_id: chat.id, role: :tool)
+      .where.not(tool_call_id: nil)
+      .pluck(:tool_call_id)
+
+    orphaned_message_ids = ToolCall
+      .joins(:message)
+      .where(messages: { chat_id: chat.id })
+      .where.not(id: responded_tool_call_ids)
+      .pluck(:message_id)
+      .uniq
+
+    Message.where(id: orphaned_message_ids).destroy_all if orphaned_message_ids.any?
+  end
 
   def system_prompt(locale)
     language_name = { "en" => "English", "it" => "Italian", "de" => "German" }.fetch(locale.to_s, "English")
@@ -80,21 +98,40 @@ class PortfolioChatResponseJob < ApplicationJob
     end
   end
 
+  RELEVANCE_SCHEMA = {
+    name: "RelevanceCheck",
+    schema: {
+      type: "object",
+      properties: {
+        relevant: { type: "boolean" }
+      },
+      required: [ "relevant" ],
+      additionalProperties: false
+    }
+  }.freeze
+
   def relevant_to_portfolio?(content)
     response = RubyLLM.chat(model: "gpt-4.1-nano")
+      .with_schema(RELEVANCE_SCHEMA)
       .with_instructions(<<~PROMPT)
-        You are a strict classifier. Decide if the user message is related to a professional
-        portfolio — that includes questions about work experience, projects, skills, education,
-        professional background, job fit, or greetings/pleasantries directed at the portfolio assistant.
+        You are a strict classifier. The user is interacting with a professional portfolio
+        assistant for a specific person. Decide whether the user message is relevant to
+        that portfolio.
 
-        Off-topic examples: writing code, solving math, telling jokes, general knowledge,
-        creative writing, or any request unrelated to learning about this person's career.
+        IMPORTANT rules:
+        - The message may be in ANY language (English, Italian, German, etc.). Classify it correctly regardless of language.
+        - The message may be a question, a command/imperative ("search for...", "tell me...", "cerca...", "zeig mir..."), or a short phrase. All forms are valid.
+        - Always assume the IMPLICIT SUBJECT is the portfolio owner. For example, "study experiences", "esperienze di studio", or "Berufserfahrung" all refer to the portfolio owner's background and are ON-TOPIC.
 
-        Respond with ONLY "yes" or "no".
+        ON-TOPIC: work experience, jobs, roles, companies, projects, technical skills,
+        programming languages, spoken/written languages, education, degrees, studies,
+        professional background, job fit/match, greetings and pleasantries to the assistant.
+
+        OFF-TOPIC: requests to write code, solve math, tell jokes, generate creative content,
+        or answer general knowledge questions unrelated to this person's career.
       PROMPT
       .ask(content)
-
-    response.content.strip.downcase.start_with?("yes")
+    response.content["relevant"]
   end
 
   def off_topic_reply(locale)
