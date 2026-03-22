@@ -2,15 +2,25 @@
      data-portfolio-chat-url-value="<%= portfolio_chat_path(locale: I18n.locale) %>">
 
   <%# Floating trigger button — bottom-right corner %>
-  <button class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg"
-          style="width:3.5rem;height:3.5rem;z-index:1055;"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#portfolioChatPanel"
-          aria-label="Ask AI about <%= profile.full_name %>"
-          title="Ask AI about <%= profile.full_name %>"
-          data-action="click->portfolio-chat#open">
-    <i class="bi bi-chat-dots-fill fs-5"></i>
-  </button>
+  <% if user_signed_in? %>
+    <button class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg"
+            style="width:3.5rem;height:3.5rem;z-index:1055;"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#portfolioChatPanel"
+            aria-label="Ask AI about <%= profile.full_name %>"
+            title="Ask AI about <%= profile.full_name %>"
+            data-action="click->portfolio-chat#open">
+      <i class="bi bi-chat-dots-fill fs-5"></i>
+    </button>
+  <% else %>
+    <%= link_to portfolio_chat_path(locale: I18n.locale),
+          class: "btn btn-primary rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg d-flex align-items-center justify-content-center",
+          style: "width:3.5rem;height:3.5rem;z-index:1055;",
+          aria: { label: "Ask AI about #{profile.full_name}" },
+          title: "Ask AI about #{profile.full_name}" do %>
+      <i class="bi bi-chat-dots-fill fs-5"></i>
+    <% end %>
+  <% end %>
 
   <%# Offcanvas panel — slides from the right %>
   <div class="offcanvas offcanvas-end"

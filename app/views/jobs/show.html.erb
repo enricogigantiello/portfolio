@@ -45,64 +45,7 @@
     <% if @job.projects.any? %>
       <div class="row g-4">
         <% @job.projects.ordered.each do |project| %>
-          <div class="col-12">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body p-4">
-                <!-- Project Header -->
-                <div class="d-flex justify-content-between align-items-start flex-wrap mb-3">
-                  <div>
-                    <h4 class="fw-bold mb-1">
-                      <% favicon = project.reference_links.project.where.not(favicon: nil).first&.favicon %>
-                      <% if favicon.present? %>
-                        <%= image_tag favicon, class: "favicon me-1", alt: "#{project.title} favicon", style: "width: 20px; height: 20px;" %>
-                      <% end %>
-                      <%= link_to project.title, job_project_path(@job, project), class: "text-decoration-none" %>
-                    </h4>
-                  </div>
-                  <% if project.role.present? %>
-                    <span class="badge tech-badge-role"><%= project.role %></span>
-                  <% end %>
-                </div>
-
-                <!-- Project Description -->
-                <% if project.description.present? %>
-                  <p class="text-muted mb-3"><%= project.description %></p>
-                <% end %>
-
-                <div class="row">
-                  <div class="col-12">
-                    <!-- Technologies Used -->
-                    <% if project.techs.any? %>
-                      <div class="mb-3">
-                        <h6 class="text-uppercase fw-bold small text-muted mb-2">
-                          <i class="bi bi-stack me-1"></i> Technologies
-                        </h6>
-                        <div class="d-flex flex-wrap gap-2">
-                          <% project.techs.each do |tech| %>
-                            <span class="badge tech-badge"><%= tech.name %></span>
-                          <% end %>
-                        </div>
-                      </div>
-                    <% end %>
-
-                    <!-- Key Achievements -->
-                    <% if project.project_achievements.any? %>
-                      <div class="mb-3">
-                        <h6 class="text-uppercase fw-bold small text-muted mb-2">
-                          <i class="bi bi-trophy me-1"></i> Key Achievements
-                        </h6>
-                        <ul class="text-muted small mb-0">
-                          <% project.project_achievements.ordered.each do |achievement| %>
-                            <li><%= achievement.description %></li>
-                          <% end %>
-                        </ul>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render 'shared/project_item', project: project, job: @job, show_link: local_assigns.fetch(:show_link, true) %>
         <% end %>
       </div>
     <% else %>
