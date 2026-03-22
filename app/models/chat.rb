@@ -10,4 +10,12 @@ class Chat < ApplicationRecord
   def portfolio?
     chat_type == PORTFOLIO_TYPE
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id chat_type user_id created_at updated_at]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[user messages]
+  end
 end
