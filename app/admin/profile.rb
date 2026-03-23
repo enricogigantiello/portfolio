@@ -14,7 +14,7 @@ ActiveAdmin.register Profile do
     end
   end
 
-  permit_params :full_name, :phone, :email, :linkedin_url,
+  permit_params :full_name, :phone, :email, :linkedin_url, :website_url,
                 :title_en, :title_it, :title_de,
                 :location_en, :location_it, :location_de,
                 :summary_p1_en, :summary_p1_it, :summary_p1_de,
@@ -31,6 +31,7 @@ ActiveAdmin.register Profile do
       row :phone
       row :email
       row :linkedin_url
+      row :website_url
       row :title
       row :location
       row :summary_p1
@@ -54,6 +55,7 @@ ActiveAdmin.register Profile do
       f.input :phone
       f.input :email
       f.input :linkedin_url, label: "LinkedIn URL"
+      f.input :website_url, label: "Website URL"
     end
 
     I18n.available_locales.each do |locale|

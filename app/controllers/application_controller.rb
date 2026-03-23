@@ -35,4 +35,8 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { locale: I18n.locale }
   end
+
+  def require_owner!
+    redirect_to localized_root_path, alert: "Not authorized." unless current_user.role_owner?
+  end
 end

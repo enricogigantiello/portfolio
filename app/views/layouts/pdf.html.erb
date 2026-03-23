@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= @profile&.full_name %> – CV</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #2d2d2d;
+        background: white;
+        line-height: 1.5;
+      }
+
+      /* ── Header ── */
+      .cv-header {
+        text-align: center;
+        padding: 1.2rem 0 0;
+      }
+
+      .cv-contact-strip a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .cv-name {
+        font-size: 2.8rem;
+        font-weight: 300;
+        letter-spacing: 0.18em;
+        color: #1a1a1a;
+        margin-bottom: 0.25rem;
+      }
+      .cv-subtitle {
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: #555;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.7rem;
+      }
+      .cv-contact-strip {
+        background-color: #ece8df;
+        padding: 0.4rem 1rem;
+        display: flex;
+        justify-content: center;
+        gap: 1.2rem;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        font-size: 0.72rem;
+        color: #444;
+        overflow: hidden;
+      }
+      .cv-contact-strip i { margin-right: 0.25rem; }
+
+      /* ── Body (page 1 prose) ── */
+      .cv-body { padding: 1rem 0; }
+      .cv-body p { margin-bottom: 0.4rem; }
+      .cv-achievements {
+        list-style-type: disc;
+        padding-left: 1.3rem;
+        margin-top: 0.7rem;
+      }
+      .cv-achievements li { margin-bottom: 0.25rem; }
+
+      /* ── Sections ── */
+      .cv-section { padding: 0.7rem 0; }
+      .cv-section-title {
+        text-align: center;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+      }
+      .cv-section-divider {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin-bottom: 0.75rem;
+      }
+
+      /* ── Tech stack grid ── */
+      .cv-tech-description {
+        margin-bottom: 0.6rem;
+        color: #555;
+        font-size: 0.85rem;
+      }
+      .cv-tech-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.55rem 1rem;
+      }
+      .cv-tech-category-name {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.1rem;
+      }
+      .cv-tech-items {
+        font-size: 0.8rem;
+        color: #555;
+      }
+
+      /* ── Page 2 ── */
+      .cv-page-2 { page-break-before: always; }
+
+      /* ── Section titles ── */
+      .cv-section-title { page-break-after: avoid; break-after: avoid; }
+      .cv-section-divider { page-break-after: avoid; break-after: avoid; }
+
+      /* ── Jobs ── */
+      .cv-job { margin-bottom: 1rem; page-break-inside: avoid; }
+      .cv-job-heading {
+        font-size: 0.92rem;
+        margin-bottom: 0.15rem;
+        line-height: 1.4;
+      }
+      .cv-job-description {
+        color: #555;
+        margin-bottom: 0.35rem;
+        font-size: 0.85rem;
+      }
+
+      /* ── Projects ── */
+      .cv-projects {
+        list-style-type: disc;
+        padding-left: 1.2rem;
+        margin: 0.3rem 0;
+      }
+      .cv-projects > li {
+        margin-bottom: 0.45rem;
+        font-size: 0.85rem;
+        line-height: 1.45;
+      }
+      .cv-project-sub {
+        list-style-type: disc;
+        padding-left: 1rem;
+        margin-top: 0.2rem;
+      }
+      .cv-project-sub li {
+        font-size: 0.8rem;
+        margin-bottom: 0.15rem;
+        color: #444;
+      }
+
+      /* ── Education ── */
+      .cv-education-item {
+        margin-bottom: 0.35rem;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      /* ── Languages ── */
+      .cv-languages {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+      }
+
+      @media print {
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

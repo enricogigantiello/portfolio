@@ -6,6 +6,7 @@ en:
   navbar:
     experience: "Experience"
     education: "Education"
+    download_cv: "Download CV"
   educations:
     index:
       title: "Education"

@@ -6,6 +6,7 @@ it:
   navbar:
     experience: "Esperienza"
     education: "Istruzione"
+    download_cv: "Scarica CV"
   educations:
     index:
       title: "Istruzione"

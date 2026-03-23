@@ -1,0 +1,22 @@
+<div class="cv-header">
+  <h1 class="cv-name"><%= profile.full_name.upcase %></h1>
+  <h2 class="cv-subtitle"><%= profile.title %></h2>
+  <div class="cv-contact-strip">
+    <% if profile.phone.present? %>
+      <a href="tel:<%= profile.phone %>"><i class="bi bi-telephone-fill"></i><%= profile.phone %></a>
+    <% end %>
+    <% if profile.email.present? %>
+      <a href="mailto:<%= profile.email %>"><i class="bi bi-envelope-fill"></i><%= profile.email %></a>
+    <% end %>
+    <% if profile.linkedin_url.present? %>
+      <a href="<%= profile.linkedin_url %>" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i><%= profile.linkedin_handle %></a>
+    <% end %>
+    <% if profile.website_url.present? %>
+      <% display_domain = profile.website_url.sub(/\Ahttps?:\/\//, "").sub(/\Awww\./, "") %>
+      <a href="<%= profile.website_url %>" target="_blank" rel="noopener noreferrer"><i class="bi bi-link-45deg"></i><%= display_domain %></a>
+    <% end %>
+    <% if profile.location.present? %>
+      <span><i class="bi bi-geo-alt-fill"></i><%= profile.location %></span>
+    <% end %>
+  </div>
+</div>

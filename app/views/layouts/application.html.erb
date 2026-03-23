@@ -44,6 +44,12 @@
                     class: "nav-link #{'active' if controller_name == 'portfolio_chats'}" %>
             </li>
           </ul>
+          <div class="me-2">
+            <%= link_to t('navbar.download_cv'),
+                  cv_path(locale: I18n.locale, format: :pdf),
+                  class: "btn btn-sm btn-outline-primary",
+                  data: { turbo: false } %>
+          </div>
           <div class="d-flex">
             <div class="btn-group" role="group" aria-label="Language switcher">
               <% I18n.available_locales.each do |locale| %>

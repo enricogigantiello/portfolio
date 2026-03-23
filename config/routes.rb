@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     resources :projects, only: [ :index ]
 
     root "home#index", as: :localized_root
+    get "/cv", to: "home#cv", defaults: { format: :pdf }
+    get "/cv/preview", to: "home#cv_preview"
 
     # Routes requiring user authentication (visitor or owner)
     authenticate :user do

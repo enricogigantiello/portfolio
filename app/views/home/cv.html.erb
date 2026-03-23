@@ -1,0 +1,111 @@
+<%# ===== PAGE 1 ===== %>
+
+<%# Header %>
+<%= render 'cv_header', profile: @profile %>
+
+<%# Summary + Key Achievements %>
+<div class="cv-body">
+  <% if @profile.summary_p1.present? %>
+    <p><%= @profile.summary_p1 %></p>
+  <% end %>
+  <% if @profile.summary_p2.present? %>
+    <p><%= @profile.summary_p2 %></p>
+  <% end %>
+  <% if @profile.summary_p3.present? %>
+    <p><%= @profile.summary_p3 %></p>
+  <% end %>
+
+  <% if @profile.profile_achievements.any? %>
+    <ul class="cv-achievements">
+      <% @profile.profile_achievements.each do |achievement| %>
+        <li><%= achievement.description %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<%# Tech Stack %>
+<div class="cv-section">
+  <h3 class="cv-section-title"><%= t("home.sections.tech_stack") %></h3>
+  <hr class="cv-section-divider">
+  <p class="cv-tech-description"><%= t("home.tech_stack.description") %></p>
+  <div class="cv-tech-grid">
+    <% @tech_categories.each do |category| %>
+      <div>
+        <div class="cv-tech-category-name">● <i class="<%= tech_category_icon(category) %>"></i> <strong><%= category.name %>:</strong></div>
+        <div class="cv-tech-items"><%= category.techs.map(&:name).join(" · ") %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%# ===== PAGE 2 ===== %>
+<div class="cv-page-2">
+
+  <%# Repeated header %>
+  <%#= render 'cv_header', profile: @profile %>
+
+  <%# Experience %>
+  <div class="cv-section">
+    <h3 class="cv-section-title"><%= t("home.sections.experience") %></h3>
+    <hr class="cv-section-divider">
+
+    <% @jobs.each do |job| %>
+      <div class="cv-job">
+        <div class="cv-job-heading">
+          <strong><%= job.title %></strong>
+          | <%= job.company %>
+          | <%= job.start_date.strftime('%Y') %> &ndash; <%= job.end_date ? job.end_date.strftime('%Y') : t("home.experience.present") %>
+        </div>
+
+        <% if job.description.present? %>
+          <p class="cv-job-description"><%= job.description %></p>
+        <% end %>
+
+        <% if job.projects.any? %>
+          <ul class="cv-projects">
+            <% job.projects.ordered.each do |project| %>
+              <li>
+                <% if project.role.present? %><%= project.role %> <% end %><strong><%= project.title %></strong><% if project.description.present? %> <%= project.description %><% end %>
+                <% if project.project_achievements.any? %>
+                  <ul class="cv-project-sub">
+                    <% project.project_achievements.ordered.each do |achievement| %>
+                      <li><%= achievement.description %></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Education %>
+  <div class="cv-section">
+    <h3 class="cv-section-title"><%= t("home.sections.education") %></h3>
+    <hr class="cv-section-divider">
+
+    <% @educations.each do |education| %>
+      <div class="cv-education-item">
+        <strong><%= education.degree %></strong>
+        | <%= education.institution %>
+        | <%= education.end_date.strftime('%Y') %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Languages %>
+  <div class="cv-section">
+    <h3 class="cv-section-title"><%= t("home.sections.languages") %></h3>
+    <hr class="cv-section-divider">
+
+    <div class="cv-languages">
+      <% @languages.each do |language| %>
+        <span><strong><%= language.name %></strong> &ndash; <%= language.level.upcase %></span>
+      <% end %>
+    </div>
+  </div>
+
+</div>

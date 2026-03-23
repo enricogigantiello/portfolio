@@ -6,6 +6,7 @@ de:
   navbar:
     experience: "Berufserfahrung"
     education: "Ausbildung"
+    download_cv: "Lebenslauf herunterladen"
   educations:
     index:
       title: "Ausbildung"
