@@ -32,7 +32,7 @@
   <div class="cv-tech-grid">
     <% @tech_categories.each do |category| %>
       <div>
-        <div class="cv-tech-category-name">● <i class="<%= tech_category_icon(category) %>"></i> <strong><%= category.name %>:</strong></div>
+        <div class="cv-tech-category-name"><i class="<%= tech_category_icon(category) %>"></i> <strong><%= category.name %>:</strong></div>
         <div class="cv-tech-items"><%= category.techs.map(&:name).join(" · ") %></div>
       </div>
     <% end %>

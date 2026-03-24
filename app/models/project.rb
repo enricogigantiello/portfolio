@@ -18,6 +18,16 @@ class Project < ApplicationRecord
 
   after_commit :reindex_for_rag
 
+  def commit_counts=(value)
+    if value.is_a?(String)
+      super(JSON.parse(value))
+    else
+      super
+    end
+  rescue JSON::ParserError
+    super(nil)
+  end
+
   private
 
   def reindex_for_rag

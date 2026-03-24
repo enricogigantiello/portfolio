@@ -89,3 +89,8 @@ end
 gem "ruby_llm", "~> 1.13"
 
 gem "dotenv", "~> 3.2"
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end

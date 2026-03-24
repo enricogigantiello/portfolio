@@ -6,6 +6,7 @@ ActiveAdmin.register Project do
                 :description_en, :description_it, :description_de,
                 :role_en, :role_it, :role_de,
                 :tile_image, :cover_image,
+                :commit_counts,
                 tech_ids: [],
                 project_achievements_attributes: [ :id, :description_en, :description_it, :description_de, :position, :_destroy ],
                 reference_links_attributes: [ :id, :label_en, :label_it, :label_de, :url, :link_type, :position, :_destroy ]
@@ -26,6 +27,9 @@ ActiveAdmin.register Project do
     end
     column "Links" do |project|
       project.reference_links.count
+    end
+    column "Commit Counts" do |project|
+      project.commit_counts.present?
     end
     column :position
     actions
@@ -159,6 +163,60 @@ ActiveAdmin.register Project do
             l.input :label, as: :string, input_html: { name: "project[reference_links_attributes][#{l.index}][label_#{locale}]", value: l.object.send("label_#{locale}") }, label: "Label"
           end
         end
+      end
+    end
+
+    f.inputs "Commit Counts (JSON)" do
+      f.input :commit_counts, as: :text, input_html: { value: f.object.commit_counts.present? ? JSON.pretty_generate(f.object.commit_counts) : "{}" }
+      div class: "help-text", style: "margin-top: 10px; padding: 10px; background-color: #f5f5f5; border-left: 3px solid #0066cc;" do
+      para do
+        strong "Sample bash scripts to generate commit counts, first for single repo, second for folder with subrepos:"
+      end
+      div do
+        pre do
+          code do
+            text_node <<~'BASH'.strip
+AUTHOR="YOUR_GIT_NAME"; 
+OUTPUT_FILE="./commit_counts.json"
+git log --author="$AUTHOR" --pretty=format:"%ad%n" --date=format:'%Y-%m-%d' \
+| grep -v '^$' \
+| sort \
+| uniq -c \
+| awk '{print "{\"date\":\""$2"\",\"count\":"$1"}"}' \
+| jq -s 'sort_by(.date) | reverse' \
+> "$OUTPUT_FILE"
+
+echo "Commit counts saved to $OUTPUT_FILE"
+            BASH
+          end
+        end
+      end
+      div do
+        pre do
+          code do
+            text_node <<~'BASH'.strip
+AUTHOR="YOUR_GIT_NAME"; 
+OUTPUT_FILE="./commit_counts.json"
+{
+  (
+    [ -d .git ] && git log --author="$AUTHOR" --pretty=format:"%ad%n" --date=format:'%Y-%m-%d'
+
+    for repo in ./*; do
+      [ -d "$repo/.git" ] && git -C "$repo" log --author="$AUTHOR" --pretty=format:"%ad%n" --date=format:'%Y-%m-%d'
+    done
+  ) \
+  | grep -v '^$' \
+  | sort \
+  | uniq -c \
+  | awk '{print "{\"date\":\""$2"\",\"count\":"$1"}"}' \
+  | jq -s 'sort_by(.date) | reverse'
+} > "$OUTPUT_FILE"
+
+echo "Commit counts saved to $OUTPUT_FILE"
+            BASH
+          end
+        end
+      end
       end
     end
 

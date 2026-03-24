@@ -1,0 +1,144 @@
+<%
+  # ── INTENSITY THRESHOLDS (commits per day) ───────────────────────────
+  # Adjust these five cutoffs to change when each color band starts.
+  # level 1 = 1+ commits, level 2 = 5+ commits, …, level 5 = 20+ commits
+  level_thresholds = [1, 5, 10, 15, 20]
+
+  intensity_level = ->(count) {
+    c = count.to_i
+    return 0 if c < level_thresholds[0]  # 0 commits
+    return 1 if c < level_thresholds[1]  # 1–4
+    return 2 if c < level_thresholds[2]  # 5–9
+    return 3 if c < level_thresholds[3]  # 10–14
+    return 4 if c < level_thresholds[4]  # 15–19
+    5                                     # 20+
+  }
+
+  counts_by_date = (commit_counts || []).each_with_object({}) do |entry, h|
+    h[Date.parse(entry["date"])] = entry["count"].to_i
+  end
+
+  all_dates  = counts_by_date.keys.sort
+  first_date = all_dates.first
+  last_date  = all_dates.last
+
+  # Group into year-bands. Each band covers one calendar year that has at
+  # least one commit. Bands are ordered oldest-first (index 0 = oldest).
+  # This makes → go forward in time (next) and ← go backward (prev).
+  years = (first_date.year..last_date.year).to_a
+  multi_year = years.size > 1
+
+  build_weeks = ->(band_start, band_end) {
+    gs = band_start - ((band_start.wday - 1) % 7)
+    ge = band_end   + ((7 - band_end.wday)   % 7)
+    weeks = []
+    d = gs
+    while d <= ge
+      weeks << (0..6).map { |offset| d + offset }
+      d += 7
+    end
+    weeks
+  }
+
+  day_labels = ["Mon", nil, "Wed", nil, "Fri", nil, nil]
+%>
+
+<div class="commit-heatmap"
+     <% if multi_year %>
+       data-controller="heatmap-nav"
+       data-heatmap-nav-years-value="<%= years.size %>"
+     <% end %>>
+
+  <% if multi_year %>
+    <%# ── Year navigation header ──────────────────────────────────────── %>
+    <div class="heatmap-nav d-flex align-items-center gap-3 mb-2">
+      <button class="heatmap-nav-btn"
+              data-action="heatmap-nav#prev"
+              data-heatmap-nav-target="prevBtn"
+              disabled
+              aria-label="Previous year">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <span class="heatmap-nav-year fw-semibold" data-heatmap-nav-target="yearLabel">
+        <%= years.last %>
+      </span>
+
+      <button class="heatmap-nav-btn"
+              data-action="heatmap-nav#next"
+              data-heatmap-nav-target="nextBtn"
+              disabled
+              aria-label="Next year">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  <% end %>
+
+  <% years.each_with_index do |year, idx| %>
+    <%
+      band_start = [first_date, Date.new(year, 1, 1)].max
+      band_end   = [last_date,  Date.new(year, 12, 31)].min
+      weeks      = build_weeks.(band_start, band_end)
+    %>
+    <div class="heatmap-year-panel"
+         data-year="<%= year %>"
+         <% if multi_year %>
+           data-heatmap-nav-target="panel"
+           style="<%= idx == years.size - 1 ? '' : 'display:none;' %>"
+         <% end %>>
+
+      <div class="heatmap-scroll">
+        <div class="heatmap-inner">
+
+          <%# ── Month labels row ────────────────────────────────────────── %>
+          <div class="heatmap-months-row">
+            <div class="heatmap-day-spacer"></div>
+            <div class="heatmap-weeks-container">
+              <% weeks.each_with_index do |week, i| %>
+                <div class="heatmap-week">
+                  <span class="heatmap-month-label">
+                    <% if i == 0 || week.first.month != weeks[i - 1].first.month %>
+                      <%= week.first.strftime("%b") %>
+                    <% end %>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <%# ── Grid ────────────────────────────────────────────────────── %>
+          <div class="heatmap-grid-row">
+            <div class="heatmap-day-labels">
+              <% day_labels.each do |label| %>
+                <div class="heatmap-day-label"><%= label %></div>
+              <% end %>
+            </div>
+
+            <div class="heatmap-weeks-container">
+              <% weeks.each do |week| %>
+                <div class="heatmap-week">
+                  <% week.each do |date| %>
+                    <% count = counts_by_date[date] || 0 %>
+                    <div class="heatmap-cell hm-<%= intensity_level.(count) %>"
+                         title="<%= date.strftime("%-d %b %Y") %>: <%= count %> commit<%= count == 1 ? '' : 's' %>">
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# ── Legend ──────────────────────────────────────────────────────── %>
+  <div class="heatmap-legend">
+    <span class="heatmap-legend-label">Less</span>
+    <% 0.upto(5) do |lvl| %>
+      <div class="heatmap-cell hm-<%= lvl %>"></div>
+    <% end %>
+    <span class="heatmap-legend-label">More</span>
+  </div>
+</div>

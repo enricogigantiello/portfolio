@@ -208,3 +208,139 @@ body {
   }
 }
 
+// Commit activity heatmap
+.commit-heatmap {
+  .heatmap-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+  }
+
+  .heatmap-inner {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .heatmap-months-row,
+  .heatmap-grid-row {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .heatmap-day-spacer,
+  .heatmap-day-labels {
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  .heatmap-day-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-right: 4px;
+  }
+
+  .heatmap-day-label {
+    height: 13px;
+    line-height: 13px;
+    font-size: 0.65rem;
+    color: #888;
+    text-align: right;
+    padding-right: 4px;
+  }
+
+  .heatmap-day-spacer {
+    margin-right: 4px;
+    height: 16px;
+  }
+
+  .heatmap-weeks-container {
+    display: flex;
+    gap: 3px;
+  }
+
+  .heatmap-week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 13px;
+  }
+
+  .heatmap-month-label {
+    display: block;
+    width: 0;           // let text overflow without pushing siblings
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 0.65rem;
+    color: #888;
+    height: 16px;
+    line-height: 16px;
+  }
+
+  .heatmap-cell {
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    cursor: default;
+  }
+
+  // ── Intensity levels (matching level_thresholds in the partial) ────
+  // hm-0 = 0 commits   hm-1 = 1–4   hm-2 = 5–9   hm-3 = 10–14
+  // hm-4 = 15–19       hm-5 = 20+
+  .hm-0 { background-color: #ebedf0; }
+  .hm-1 { background-color: #c3d6e8; }
+  .hm-2 { background-color: #8ab0ce; }
+  .hm-3 { background-color: #5589b4; }
+  .hm-4 { background-color: #2f659a; }
+  .hm-5 { background-color: #1a3f6f; }
+
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 6px;
+    justify-content: flex-end;
+  }
+
+  .heatmap-legend-label {
+    font-size: 0.65rem;
+    color: #888;
+    margin: 0 2px;
+  }
+
+  .heatmap-nav-btn {
+    background: none;
+    border: 1px solid #d0d7de;
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #34495e;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #ebedf0;
+      border-color: #adb5bd;
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+  }
+
+  .heatmap-nav-year {
+    font-size: 0.9rem;
+    min-width: 40px;
+    text-align: center;
+  }
+}
+

@@ -38,6 +38,20 @@
   </div>
 </section>
 
+<!-- Commit Activity -->
+<% if @project.commit_counts.present? %>
+  <section class="py-4 bg-white border-bottom">
+    <div class="container">
+      <h3 class="section-title mb-1">
+        <i class="bi bi-graph-up me-2"></i>
+        Activity
+      </h3>
+      <hr class="section-divider">
+      <%= render "projects/commit_heatmap", commit_counts: @project.commit_counts %>
+    </div>
+  </section>
+<% end %>
+
 <!-- Project Details -->
 <section class="py-5">
   <div class="container">
