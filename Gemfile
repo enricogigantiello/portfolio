@@ -86,7 +86,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "ruby_llm", "~> 1.13"
+gem "ruby_llm", "~> 1.14"
 
 gem "dotenv", "~> 3.2"
 
